@@ -143,7 +143,7 @@
                 <li><a href="menu.html">Menu</a></li>
                 <li><a href="booking.html">Booking</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="Contact.html">Contact</a></li>
+                <li><a href="contact.html">Contact</a></li>
                 <li><a href="experiences.html">Experiences</a></li>
                 <li id="user-profile-zone"></li>
             </ul>
@@ -205,52 +205,76 @@
         </div>
     </div>
 
-    <script src="js/script.js"></script>
+    <script src="js/script.js?v=1.2"></script>
     
     <script>
-        /* ===== AUTOMATIC HERO IMAGE CYCLING SLIDER ENGINE ===== */
-        document.addEventListener("DOMContentLoaded", function() {
-            const architecturalSlides = document.querySelectorAll("#heroSliderContainer .slide");
-            let activeFramePointer = 0;
-            const slideLifespanDuration = 5000; // Change image every 5 seconds
+      document.addEventListener("DOMContentLoaded", function() {
+    // 1. Get the logged-in user from localStorage
+    const username = localStorage.getItem("baresto_user_name");
+    
+    // 2. Find the navigation area where the button should go
+    const profileZone = document.getElementById("user-profile-zone");
 
-            function cycleHeroBackgrounds() {
-                // Remove active status class from current frame
-                architecturalSlides[activeFramePointer].classList.remove("active");
-                
-                // Increment position counter safely
-                activeFramePointer = (activeFramePointer + 1) % architecturalSlides.length;
-                
-                // Inject active display rules onto next index targeting node
-                architecturalSlides[activeFramePointer].classList.add("active");
-            }
+    // 3. Update the text greetings on the page SAFELY (if they exist)
+    const welcomeGreetingId = document.getElementById("welcomeGreeting");
+    if (welcomeGreetingId && username) {
+        welcomeGreetingId.innerText = `Welcome Back, ${username}`;
+    }
 
-            // Fire running window loop system if multi-slides exist
-            if (architecturalSlides.length > 1) {
-                setInterval(cycleHeroBackgrounds, slideLifespanDuration);
-            }
+    const welcomeGreetingClasses = document.querySelectorAll(".welcomeGreetingClass");
+    if (welcomeGreetingClasses.length > 0 && username) {
+        welcomeGreetingClasses.forEach(element => {
+            element.innerText = `Welcome Back, ${username}`;
         });
+    }
 
-
-       
-
-        /* ===== LIVE REAL-TIME MENU FILTER ENGINE ===== */
-        function filterMenu(category, clickedButton) {
-            const tabs = document.querySelectorAll('.menu-tab-btn');
-            tabs.forEach(tab => tab.classList.remove('active'));
-            clickedButton.classList.add('active');
-
-            const cards = document.querySelectorAll('.menu-grid .card');
-            cards.forEach(card => {
-                const cardCategory = card.getAttribute('data-category');
-                
-                if (category === 'all' || cardCategory === category) {
-                    card.classList.remove('hidden');
-                } else {
-                    card.classList.add('hidden');
-                }
-            });
+    // 4. Inject the profile button or sign-in button safely
+    if (profileZone) {
+        if (username) {
+            // User is logged in -> Show the avatar and dropdown menu
+            const initialLetter = username.charAt(0).toUpperCase();
+            profileZone.innerHTML = `
+                <div class="user-profile-badge" onclick="toggleProfileDropdownGlobal(event)" style="display: flex; align-items: center; gap: 10px; cursor: pointer; position: relative;">
+                    <div class="profile-avatar-initial" style="width: 32px; height: 32px; background: linear-gradient(135deg, #d4af37, #b89024); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #050608; font-weight: 600; font-size: 14px;">
+                        ${initialLetter}
+                    </div>
+                    <span class="profile-name" style="color: #ffffff; font-size: 13px; font-weight: 500;">${username}</span>
+                    <i class="fa-solid fa-chevron-down profile-arrow" style="font-size: 10px; color: #d4af37;"></i>
+                    
+                    <div class="profile-dropdown-menu" id="navDropdown" style="display: none;">
+                        <a href="booking.html"><i class="fa-solid fa-utensils"></i> Book Table</a>
+                        <a href="#" onclick="executeAppLogoutGlobal(event)"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
+                    </div>
+                </div>
+            `;
+        } else {
+            // No user logged in -> Show plain Sign In button
+            profileZone.innerHTML = `<a href="index.html" style="padding: 6px 16px; font-size: 12px; text-decoration: none; background: #d4af37; color: #050608; border-radius: 4px; display: inline-block;">Sign In</a>`;
         }
+    }
+});
+
+/* ===== DROPDOWN CLICK ACTIONS ===== */
+function toggleProfileDropdownGlobal(e) {
+    e.stopPropagation();
+    const dropdown = document.getElementById("navDropdown");
+    if (dropdown) {
+        dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+    }
+}
+
+function executeAppLogoutGlobal(e) {
+    e.preventDefault();
+    localStorage.removeItem("baresto_user_name"); 
+    window.location.href = "index.html"; 
+}
+
+// Close the dropdown if the user clicks anywhere else on the screen
+window.addEventListener("click", function() {
+    const dropdown = document.getElementById("navDropdown");
+    if (dropdown) dropdown.style.display = "none";
+});
+        
     </script>
 </body>
 </html>
