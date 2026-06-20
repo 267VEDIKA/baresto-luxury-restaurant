@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to BARESTO | Premium Culinary Experience</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ===== CORE RESET & VARIABLES ===== */
+        :root {
+            --gold: #d4af37;
+            --gold-light: #f3e5ab;
+            --dark-bg: #050608;
+            --card-bg: #10121a;
+            --text-gray: #c0c5d5;
+            --footer-bg: #090a0f;
+            --input-bg: #161924;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--dark-bg);
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* ===== PREMIUM FIXED HEADER NAVIGATION ===== */
+        .luxury-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(to bottom, rgba(5,6,8,0.9), rgba(5,6,8,0));
+            backdrop-filter: blur(4px);
+            z-index: 100;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .nav-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: 3px;
+            color: var(--gold);
+            text-transform: uppercase;
+        }
+
+        /* The Premium Header Action Button */
+        .nav-auth-btn {
+            padding: 10px 24px;
+            background: transparent;
+            border: 1px solid var(--gold);
+            border-radius: 4px;
+            color: var(--gold-light);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .nav-auth-btn:hover {
+            background: var(--gold);
+            color: var(--dark-bg);
+            box-shadow: 0 0 15px rgba(212, 175, 55, 0.4);
+            transform: translateY(-1px);
+        }
+
+        /* ===== MAIN HERO GATEWAY CONTAINER ===== */
+        .welcome-gateway {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 100px 20px 40px 20px;
+            background: linear-gradient(rgba(5, 6, 8, 0.45), rgba(5, 6, 8, 0.85)),
+                        url('https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=1920&auto=format&fit=crop') no-repeat center center;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+        /* ===== BACKGROUND WATERMARK ===== */
+        .bg-watermark {
+            position: absolute;
+            top: 35%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(100px, 20vw, 260px);
+            font-weight: 700;
+            color: rgba(212, 175, 55, 0.08); 
+            text-transform: lowercase;
+            letter-spacing: -4px;
+            white-space: nowrap;
+            pointer-events: none;
+            z-index: 1;
+            user-select: none;
+        }
+
+        /* ===== HERO HEADERS ===== */
+        .gateway-header {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            margin-bottom: 10px;
+            max-width: 700px;
+        }
+
+        .gateway-header .subtitle {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .gateway-header h2 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(32px, 4.5vw, 48px);
+            font-weight: 400;
+            line-height: 1.2;
+            color: #ffffff;
+            text-shadow: 0 4px 15px rgba(0,0,0,0.6);
+        }
+
+        /* ===== SHOWCASE CONTAINER ===== */
+        .showcase-container {
+            position: relative;
+            width: 100%;
+            max-width: 1600px; 
+            height: 460px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            z-index: 3;
+            perspective: 1500px;
+        }
+
+        .preview-card {
+            position: absolute;
+            width: 300px;
+            height: 420px;
+            background: var(--card-bg);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            transition: transform 0.8s cubic-bezier(0.25, 1, 0.3, 1), 
+                        border-color 0.5s ease, 
+                        box-shadow 0.5s ease,
+                        filter 0.8s ease,
+                        opacity 0.8s ease;
+            opacity: 0; 
+            pointer-events: none;
+        }
+
+        .card-inner {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-img-wrapper {
+            width: 100%;
+            height: 62%;
+            position: relative;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .card-img-wrapper img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: transform 0.6s ease, opacity 0.6s ease;
+        }
+
+        .card-details {
+            padding: 22px;
+            background: linear-gradient(to bottom, #0e1017, #07080c);
+            height: 38%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card-details h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .card-details p {
+            font-size: 11px;
+            color: var(--text-gray);
+            line-height: 1.6;
+            height: 36px;
+            overflow: hidden;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            padding-top: 10px;
+        }
+
+        .card-tag {
+            font-size: 9px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gold);
+            font-weight: 600;
+        }
+
+        .card-price {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gold-light);
+        }
+
+        /* ===== POSITION SLOTS ===== */
+        .pos-far-left { opacity: 1; pointer-events: auto; transform: translateX(-520px) rotateY(35deg) scale(0.8); z-index: 2; filter: brightness(0.5) blur(0.5px); }
+        .pos-left { opacity: 1; pointer-events: auto; transform: translateX(-270px) rotateY(20deg) scale(0.9); z-index: 3; filter: brightness(0.75); }
+        .pos-center { opacity: 1; pointer-events: auto; transform: translateX(0) rotateY(0) scale(1) translateZ(80px); z-index: 5; filter: brightness(1); border-color: rgba(212, 175, 55, 0.5); }
+        .pos-right { opacity: 1; pointer-events: auto; transform: translateX(270px) rotateY(-20deg) scale(0.9); z-index: 3; filter: brightness(0.75); }
+        .pos-far-right { opacity: 1; pointer-events: auto; transform: translateX(520px) rotateY(-35deg) scale(0.8); z-index: 2; filter: brightness(0.5) blur(0.5px); }
+        
+        .preview-card:hover .card-img-wrapper img { opacity: 1; }
+        .pos-center:hover { border-color: var(--gold); box-shadow: 0 30px 70px rgba(212, 175, 55, 0.2); }
+        .pos-center:hover .card-img-wrapper img { transform: scale(1.06); }
+
+        /* ===== LUXURY MODAL POPUP CARD ===== */
+        .auth-overlay-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 6, 8, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .auth-overlay-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .auth-popup-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            border-radius: 16px;
+            width: 100%;
+            max-width: 440px;
+            padding: 45px 40px;
+            position: relative;
+            box-shadow: 0 35px 70px rgba(0,0,0,0.9);
+            transform: scale(0.9);
+            transition: transform 0.4s cubic-bezier(0.25, 1, 0.3, 1);
+        }
+
+        .auth-overlay-modal.active .auth-popup-card {
+            transform: scale(1);
+        }
+
+        .close-modal-btn {
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            background: none;
+            border: none;
+            color: #606675;
+            font-size: 24px;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .close-modal-btn:hover { color: var(--gold); }
+
+        .auth-popup-card h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            color: #ffffff;
+            margin-bottom: 6px;
+            text-align: center;
+            letter-spacing: 1px;
+        }
+
+        .auth-popup-card .switch-notice {
+            font-size: 13px;
+            color: var(--text-gray);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .auth-popup-card .switch-notice span {
+            color: var(--gold);
+            cursor: pointer;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .input-group label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--gold);
+            font-weight: 500;
+        }
+
+        .input-group input {
+            background: var(--input-bg);
+            border: 1px solid rgba(255,255,255,0.08);
+            padding: 14px;
+            border-radius: 6px;
+            color: #ffffff;
+            font-size: 13px;
+            outline: none;
+            font-family: 'Poppins', sans-serif;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-group input:focus { border-color: var(--gold); }
+
+        .submit-auth-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #e5c158, #b89024);
+            border: none;
+            border-radius: 6px;
+            color: #050608;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .submit-auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.35);
+        }
+
+        /* ===== MODERN TOAST NOTIFICATION CARD ===== */
+        .premium-toast {
+            position: fixed;
+            top: 30px;
+            right: -450px;
+            background: #10121a;
+            border-left: 4px solid #d4af37;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+            border-right: 1px solid rgba(255, 255, 255, 0.08);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 16px 24px;
+            border-radius: 4px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            z-index: 1000;
+            transition: right 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .premium-toast.show {
+            right: 30px;
+        }
+
+        .toast-icon {
+            font-size: 20px;
+            color: #d4af37;
+            animation: pulseIcon 2s infinite ease-in-out;
+        }
+
+        .toast-content h4 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            color: #ffffff;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .toast-content p {
+            font-size: 12px;
+            color: #c0c5d5;
+            margin-top: 2px;
+        }
+
+        @keyframes pulseIcon {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.8; }
+        }
+
+        /* ===== PREMIUM WEBSITE FOOTER COMPONENT ===== */
+        .premium-footer {
+            background-color: var(--footer-bg);
+            border-top: 1px solid rgba(212, 175, 55, 0.15);
+            padding: 50px 40px 20px 40px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr auto;
+            gap: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            padding-bottom: 40px;
+        }
+
+        .footer-brand h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 28px;
+            color: var(--gold);
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+
+        .footer-brand p { font-size: 13px; color: #8a90a0; line-height: 1.6; max-width: 320px; }
+        .footer-column h4 { font-size: 13px; text-transform: uppercase; letter-spacing: 2px; color: #ffffff; margin-bottom: 20px; font-weight: 600; }
+        .footer-column ul { list-style: none; }
+        .footer-column ul li { margin-bottom: 10px; }
+        .footer-column ul li a { color: #8a90a0; text-decoration: none; font-size: 13px; }
+        
+        .footer-action-box { display: flex; flex-direction: column; justify-content: center; align-items: flex-start; }
+        .footer-action-box p { font-size: 12px; color: #8a90a0; margin-bottom: 12px; }
+
+        .footer-bottom {
+            max-width: 1400px;
+            margin: 20px auto 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: #606675;
+        }
+
+        /* ===== RESPONSIVE BREAKPOINTS ===== */
+        @media (max-width: 1200px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 30px; }
+            .pos-far-left  { transform: translateX(-390px) scale(0.75); }
+            .pos-left      { transform: translateX(-200px) scale(0.85); }
+            .pos-right     { transform: translateX(200px) scale(0.85); }
+            .pos-far-right { transform: translateX(390px) scale(0.75); }
+        }
+
+        @media (max-width: 768px) {
+            .luxury-navbar { padding: 15px 20px; }
+            .pos-far-left, .pos-far-right { display: none; }
+            .pos-left { transform: translateX(-140px) scale(0.8); }
+            .pos-right { transform: translateX(140px) scale(0.8); }
+            .showcase-container { height: 400px; }
+            .preview-card { width: 260px; height: 380px; }
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; gap: 10px; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="premium-toast" id="luxuryToast">
+        <div class="toast-icon">✨</div>
+        <div class="toast-content">
+            <h4 id="toastTitle">Verification Success</h4>
+            <p id="toastMessage">Welcome back to the Baresto Lounge.</p>
+        </div>
+    </div>
+
+    <nav class="luxury-navbar">
+        <div class="nav-logo">Baresto</div>
+        <div>
+            <button class="nav-auth-btn" onclick="openAuthModal('login')">Sign In / Register</button>
+        </div>
+    </nav>
+
+    <section class="welcome-gateway">
+        <div class="bg-watermark">restaura</div>
+
+        <header class="gateway-header">
+            <p class="subtitle">Welcome to Baresto</p>
+            <h2>An Exceptional Journey Of Hot & Spicy Fine Dining</h2>
+        </header>
+
+        <div class="showcase-container" id="carouselDeck" onmouseenter="pauseRotation()" onmouseleave="startRotation()">
+            <div class="preview-card pos-far-left" onclick="shiftToCenter(this)">
+                <div class="card-inner">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1504674900247-0877df9cc836?q=80&w=600&auto=format&fit=crop" alt="Wagyu Ribeye">
+                    </div>
+                    <div class="card-details">
+                        <div>
+                            <h3>Wagyu Ribeye</h3>
+                            <p>A5 Grade premium Japanese cuts paired with truffle herb reduction jus.</p>
+                        </div>
+                        <div class="card-meta">
+                            <span class="card-tag">Hot & Spicy</span>
+                            <span class="card-price">$85</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-card pos-left" onclick="shiftToCenter(this)">
+                <div class="card-inner">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?q=80&w=600&auto=format&fit=crop" alt="Baresto House">
+                    </div>
+                    <div class="card-details">
+                        <div>
+                            <h3>Baresto House</h3>
+                            <p>Our flagship combination plate featuring exotic house spices.</p>
+                        </div>
+                        <div class="card-meta">
+                            <span class="card-tag">Chef Choice</span>
+                            <span class="card-price">$42</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-card pos-center" onclick="shiftToCenter(this)">
+                <div class="card-inner">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?q=80&w=600&auto=format&fit=crop" alt="Truffle Burrata">
+                    </div>
+                    <div class="card-details">
+                        <div>
+                            <h3>Truffle Burrata</h3>
+                            <p>Stone-baked thin crust layered with cream burrata and premium olive oils.</p>
+                        </div>
+                        <div class="card-meta">
+                            <span class="card-tag">Pizza Zone</span>
+                            <span class="card-price">$28</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-card pos-right" onclick="shiftToCenter(this)">
+                <div class="card-inner">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=600&auto=format&fit=crop" alt="Glazed Fondant">
+                    </div>
+                    <div class="card-details">
+                        <div>
+                            <h3>Glazed Fondant</h3>
+                            <p>Dark chocolate sphere filled with warm raspberry lava and vanilla bean gel.</p>
+                        </div>
+                        <div class="card-meta">
+                            <span class="card-tag">Sweet Treats</span>
+                            <span class="card-price">$16</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="preview-card pos-far-right" onclick="shiftToCenter(this)">
+                <div class="card-inner">
+                    <div class="card-img-wrapper">
+                        <img src="https://images.unsplash.com/photo-1579871494447-9811cf80d66c?q=80&w=600&auto=format&fit=crop" alt="Dragon Sushi Roll">
+                    </div>
+                    <div class="card-details">
+                        <div>
+                            <h3>Dragon Sushi Roll</h3>
+                            <p>Premium bluefin tuna and spicy crab wrapped with fresh sliced avocado.</p>
+                        </div>
+                        <div class="card-meta">
+                            <span class="card-tag">Seafood Elite</span>
+                            <span class="card-price">$32</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="auth-overlay-modal" id="authModal" onclick="closeAuthModalViaOverlay(event)">
+        <div class="auth-popup-card">
+            <button class="close-modal-btn" onclick="closeAuthModal()">&times;</button>
+            
+            <div id="modal-login-view">
+                <h3>Member Login</h3>
+                <p class="switch-notice">New to Baresto? <span onclick="switchModalView('register')">Create an account</span></p>
+                
+                <form onsubmit="event.preventDefault(); handleAuthSubmit('logged in');">
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="yourname@luxury.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Account Password</label>
+                        <input type="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="submit-auth-btn">Sign In</button>
+                </form>
+            </div>
+
+            <div id="modal-register-view" style="display: none;">
+                <h3>Join Vault Rewards</h3>
+                <p class="switch-notice">Already have an account? <span onclick="switchModalView('login')">Sign in instead</span></p>
+                
+                <form onsubmit="event.preventDefault(); handleAuthSubmit('registered');">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="Alexander Wright" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="yourname@luxury.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Create Password</label>
+                        <input type="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="submit-auth-btn">Create Luxury Account</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <footer class="premium-footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h3>BARESTO</h3>
+                <p>An exceptional culinary fine dining milestone. We blend state of the art aesthetics with premium gastronomy to ignite your senses.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Hours & Info</h4>
+                <ul>
+                    <li>Mon - Sun: 5 PM - 11 PM</li>
+                    <li>+1 (555) 234-7890</li>
+                    <li>742 Evergreen Dr, NY</li>
+                </ul>
+            </div>
+            <div class="footer-action-box">
+                <p>Ready to experience excellence?</p>
+                <button type="button" class="nav-auth-btn" onclick="openAuthModal('register')">Register Now</button>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 BARESTO Luxury Gastronomy. All rights reserved.</p>
+            <p>Privacy Policy &nbsp;&bull;&nbsp; Terms of Service</p>
+        </div>
+    </footer>
+
+    <script>
+        /* ===== STABLE 3D CAROUSEL DECK CONTROLLER ===== */
+        let centerIndex = 2; 
+        let autoPlayTimer = null;
+
+        function updateCarouselLayout() {
+            const deck = document.getElementById('carouselDeck');
+            const cards = Array.from(deck.getElementsByClassName('preview-card'));
+            const totalCards = cards.length;
+
+            cards.forEach((card, index) => {
+                card.className = 'preview-card';
+                let offset = index - centerIndex;
+                if (offset < -Math.floor(totalCards/2)) offset += totalCards;
+                if (offset > Math.floor(totalCards/2)) offset -= totalCards;
+
+                if (offset === -2) card.classList.add('pos-far-left');
+                else if (offset === -1) card.classList.add('pos-left');
+                else if (offset === 0) card.classList.add('pos-center');
+                else if (offset === 1) card.classList.add('pos-right');
+                else if (offset === 2) card.classList.add('pos-far-right');
+            });
+        }
+
+        function shiftToCenter(clickedCard) {
+            const deck = document.getElementById('carouselDeck');
+            const cards = Array.from(deck.getElementsByClassName('preview-card'));
+            centerIndex = cards.indexOf(clickedCard);
+            updateCarouselLayout();
+        }
+
+        function slideNext() {
+            const deck = document.getElementById('carouselDeck');
+            if(!deck) return;
+            const totalCards = deck.getElementsByClassName('preview-card').length;
+            centerIndex = (centerIndex + 1) % totalCards;
+            updateCarouselLayout();
+        }
+
+        function startRotation() { if (!autoPlayTimer) { autoPlayTimer = setInterval(slideNext, 3500); } }
+        function pauseRotation() { clearInterval(autoPlayTimer); autoPlayTimer = null; }
+
+        /* ===== MODAL WINDOW LOGIC CONTROLLERS ===== */
+        function openAuthModal(mode) {
+            const modal = document.getElementById('authModal');
+            modal.classList.add('active');
+            switchModalView(mode);
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.remove('active');
+        }
+
+        function closeAuthModalViaOverlay(e) {
+            if (e.target.id === 'authModal') { closeAuthModal(); }
+        }
+
+        function switchModalView(view) {
+            const loginView = document.getElementById('modal-login-view');
+            const registerView = document.getElementById('modal-register-view');
+            if(view === 'login') {
+                loginView.style.display = 'block';
+                registerView.style.display = 'none';
+            } else {
+                loginView.style.display = 'none';
+                registerView.style.display = 'block';
+            }
+        }
+
+       function handleAuthSubmit(actionString) {
+    // 1. Instantly hide the input form popup modal card
+    closeAuthModal();
+
+    // 2. Fetch toast components and inputs
+    const toast = document.getElementById('luxuryToast');
+    const title = document.getElementById('toastTitle');
+    const message = document.getElementById('toastMessage');
+    
+    // 3. Grab the user's name dynamically (Fallback to 'Valued Guest' if login)
+    let userName = "Valued Guest";
+    if (actionString === 'registered') {
+        const nameInput = document.querySelector('#modal-register-view input[type="text"]');
+        if(nameInput && nameInput.value) userName = nameInput.value;
+    } else {
+        const emailInput = document.querySelector('#modal-login-view input[type="email"]').value;
+        // Clean up email to look like a nice username (e.g., alex@luxury.com -> Alex)
+        userName = emailInput.split('@')[0];
+        userName = userName.charAt(0).toUpperCase() + userName.slice(1);
+    }
+
+    // 4. Save the user's name in the browser storage to use on home.html
+    localStorage.setItem("baresto_user_name", userName);
+
+    // 5. Customize modern message contents
+    if (actionString === 'logged in') {
+        title.innerText = `Welcome, ${userName}!`;
+        message.innerText = "Logged success! Transferring to your VIP Lounge...";
+    } else {
+        title.innerText = "Registration Success";
+        message.innerText = "Your account is active. Loading secure portal...";
+    }
+
+    // 6. Slide out the premium card message notification onto screen
+    toast.classList.add('show');
+
+    // 7. Transfer to home.html smoothly
+    setTimeout(() => {
+        toast.classList.remove('show');
+        window.location.href = "home.html";
+    }, 2200);
+}
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateCarouselLayout();
+            startRotation();
+        });
+    </script>
+</body>
+</html>

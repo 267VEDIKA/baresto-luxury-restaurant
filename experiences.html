@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BARESTO | Curated Experiences & Private Venues</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --gold: #d4af37;
+            --gold-dark: #b89024;
+            --dark-bg: #050608;
+            --card-bg: #10121a;
+            --text-gray: #8a90a0;
+            --border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--dark-bg); font-family: 'Poppins', sans-serif; color: #ffffff; overflow-x: hidden; }
+
+        /* ===== GLOBAL NAVIGATION BAR ===== */
+        .luxury-navbar {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(5, 6, 8, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 100;
+        }
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px; font-weight: 700; letter-spacing: 3px;
+            color: var(--gold); text-transform: uppercase; text-decoration: none;
+        }
+        .nav-links { display: flex; gap: 35px; list-style: none; }
+        .nav-links a {
+            color: #ffffff; text-decoration: none; font-size: 13px;
+            letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+        /* ===== EXPERIENCES HERO BANNER ===== */
+        .exp-hero {
+            padding: 190px 20px 90px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(16, 18, 26, 0.4), var(--dark-bg));
+        }
+        .exp-hero span { color: var(--gold); font-size: 11px; text-transform: uppercase; letter-spacing: 5px; display: block; margin-bottom: 10px; }
+        .exp-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 56px; font-weight: 500; letter-spacing: 1px; }
+        .exp-hero p { color: var(--text-gray); font-size: 14px; max-width: 600px; margin: 10px auto 0 auto; line-height: 1.6; font-weight: 300; }
+
+        /* ===== VENUES GRAPH MATRIX AREA ===== */
+        .exp-showcase-container { max-width: 1200px; margin: 0 auto; padding: 0 20px 100px 20px; }
+        
+        .exp-row { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: 100px; }
+        .exp-row:nth-child(even) { direction: rtl; } 
+        .exp-row:nth-child(even) .exp-text-block { direction: ltr; } 
+
+        /* ===== INDEPENDENT AUTO CAROUSEL PLATFORM LAYOUT ===== */
+        .mini-carousel-container { 
+            position: relative; 
+            border-radius: 12px; 
+            overflow: hidden; 
+            border: 1px solid var(--border-color); 
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5); 
+            width: 100%;
+            height: 450px;
+        }
+        
+        .carousel-track { width: 100%; height: 100%; position: relative; }
+        
+        .slide-item {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            object-fit: cover; opacity: 0; visibility: hidden;
+            transition: opacity 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), visibility 0.8s;
+            z-index: 1;
+        }
+        .slide-item.active { opacity: 1; visibility: visible; z-index: 2; }
+        
+        .exp-meta-badge { 
+            position: absolute; top: 20px; left: 20px; 
+            background: rgba(5,6,8,0.9); border: 1px solid var(--gold); 
+            color: var(--gold); font-size: 10px; text-transform: uppercase; 
+            padding: 6px 14px; border-radius: 4px; letter-spacing: 1px; z-index: 5;
+        }
+
+        .carousel-dots-group {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            z-index: 5; display: flex; gap: 8px; background: rgba(5, 6, 8, 0.4);
+            padding: 6px 12px; border-radius: 20px; backdrop-filter: blur(4px);
+        }
+        .indicator-dot { width: 8px; height: 8px; background: rgba(255, 255, 255, 0.3); border-radius: 50%; cursor: pointer; transition: all 0.3s; }
+        .indicator-dot.active { background: var(--gold); transform: scale(1.2); box-shadow: 0 0 8px var(--gold); }
+
+        /* ===== CONTENT TEXT STYLING ===== */
+        .exp-text-block span { color: var(--gold); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 8px; }
+        .exp-text-block h2 { font-family: 'Cormorant Garamond', serif; font-size: 38px; font-weight: 600; margin-bottom: 20px; }
+        .exp-text-block p { color: var(--text-gray); font-size: 14px; line-height: 1.8; margin-bottom: 25px; font-weight: 300; }
+        
+        .exp-features-list { list-style: none; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .exp-features-list li { font-size: 13px; color: #ffffff; display: flex; align-items: center; gap: 10px; }
+        .exp-features-list li i { color: var(--gold); font-size: 12px; }
+
+        /* ===== CONCIERGE BANNER ===== */
+        .concierge-cta-banner { background: #0b0d13; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); padding: 80px 20px; text-align: center; }
+        .concierge-cta-banner h2 { font-family: 'Cormorant Garamond', serif; font-size: 40px; margin-bottom: 15px; }
+        .concierge-cta-banner p { color: var(--text-gray); font-size: 14px; max-width: 550px; margin: 0 auto 30px auto; font-weight: 300; line-height: 1.6; }
+        .concierge-btn { display: inline-block; background: linear-gradient(135deg, var(--gold), var(--gold-dark)); color: #050608; text-decoration: none; padding: 15px 35px; border-radius: 6px; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; transition: all 0.3s ease; }
+        .concierge-btn:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(212,175,55,0.3); }
+
+        @media (max-width: 992px) {
+            .exp-row, .exp-row:nth-child(even) { grid-template-columns: 1fr; gap: 40px; direction: ltr; }
+            .mini-carousel-container { height: 350px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="luxury-navbar">
+        <a href="home.html" class="logo">BARESTO</a>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="booking.html">Booking</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="experiences.html" class="active">Experiences</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <header class="exp-hero">
+        <span>Bespoke Hospitality</span>
+        <h1>Curated Experiences</h1>
+        <p>Beyond our menu lies a selection of architectural environments and specialized culinary programs designed for absolute indulgence.</p>
+    </header>
+
+    <main class="exp-showcase-container">
+        
+        <div class="exp-row" id="rowSuite">
+            <div class="mini-carousel-container" data-speed="3000">
+                <div class="carousel-track">
+                    <img src="https://images.unsplash.com/photo-1543007630-9710e4a00a20?q=80&w=600" alt="Imperial Suite Dining" class="slide-item active">
+                    <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=600" alt="Imperial Suite Lounge Area" class="slide-item">
+                    <img src="https://images.unsplash.com/photo-1578474846511-04ba529f0b88?q=80&w=600" alt="Imperial Suite Butler Station" class="slide-item">
+                </div>
+                <div class="carousel-dots-group">
+                    <span class="indicator-dot active"></span>
+                    <span class="indicator-dot"></span>
+                    <span class="indicator-dot"></span>
+                </div>
+                <div class="exp-meta-badge">VVIP Lounge</div>
+            </div>
+            <div class="exp-text-block">
+                <span>Total Discretion</span>
+                <h2>The Imperial Dining Suites</h2>
+                <p>Designed for high-profile business dealings, celebrities, or intimate multi-generational family milestones. Our private dining rooms shield you completely from the main floor, offering bespoke sound design, custom climate controls, and a dedicated personal butler track team.</p>
+                <ul class="exp-features-list">
+                    <li><i class="fa-solid fa-check"></i> Seats 8 to 16 guests</li>
+                    <li><i class="fa-solid fa-check"></i> Private service entrance</li>
+                    <li><i class="fa-solid fa-check"></i> Personalized sound setup</li>
+                    <li><i class="fa-solid fa-check"></i> Custom tasting selections</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="exp-row" id="rowVault">
+            <div class="mini-carousel-container" data-speed="3200">
+                <div class="carousel-track">
+                    <img src="https://images.unsplash.com/photo-1560624052-449f5ddf0c31?q=80&w=600&auto=format&fit=crop" alt="Wine Vault Cellar Wall" class="slide-item active">
+                    <img src="https://images.unsplash.com/photo-1528255671579-01b9e182ed1d?q=80&w=600&auto=format&fit=crop" alt="Wine Pouring Close-up" class="slide-item">
+                    <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=600&auto=format&fit=crop" alt="Wine Tasting Setup" class="slide-item">
+                </div>
+                <div class="carousel-dots-group">
+                    <span class="indicator-dot active"></span>
+                    <span class="indicator-dot"></span>
+                    <span class="indicator-dot"></span>
+                </div>
+                <div class="exp-meta-badge">Master Sommelier Track</div>
+            </div>
+            <div class="exp-text-block">
+                <span>Subterranean Rare Reserves</span>
+                <h2>The Vintage Vault Experience</h2>
+                <p>Descend into our atmospheric, climate-locked cellar holding hundreds of carefully stored old-world vintages and award-winning boutique reserves. Guests can book a private hour-long pre-dinner masterclass led by our resident Sommelier, paired with world-class artisanal cheeses.</p>
+                <ul class="exp-features-list">
+                    <li><i class="fa-solid fa-check"></i> 450+ Rare global labels</li>
+                    <li><i class="fa-solid fa-check"></i> Intimate custom bar seating</li>
+                    <li><i class="fa-solid fa-check"></i> Handcrafted charcuterie</li>
+                    <li><i class="fa-solid fa-check"></i> Vintage horizontal flights</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="exp-row" id="rowChef">
+            <div class="mini-carousel-container" data-speed="3400">
+                <div class="carousel-track">
+                    <img src="https://images.unsplash.com/photo-1559339352-11d035aa65de?q=80&w=600" alt="Kitchen Counter Seatings" class="slide-item active">
+                    <img src="https://images.unsplash.com/photo-1600565193348-f74bd3c7ccdf?q=80&w=600" alt="Chef Preparing Plating" class="slide-item">
+                    <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=600" alt="Finishing Fine Dining Details" class="slide-item">
+                </div>
+                <div class="carousel-dots-group">
+                    <span class="indicator-dot active"></span>
+                    <span class="indicator-dot"></span>
+                    <span class="indicator-dot"></span>
+                </div>
+                <div class="exp-meta-badge">Gastronomy Counter</div>
+            </div>
+            <div class="exp-text-block">
+                <span>Sensory Proximity</span>
+                <h2>The Kitchen Chef’s Table</h2>
+                <p>Positioned directly inside the active boundaries of the kitchen line window. Take a seat at our backlit marble slab to watch Executive Chef Marco Valerius build a custom, fluid 9-course experimental journey. Every dish is served directly by the hands that created it.</p>
+                <ul class="exp-features-list">
+                    <li><i class="fa-solid fa-check"></i> Strict limit of 4 seats per night</li>
+                    <li><i class="fa-solid fa-check"></i> Interactive molecular plating</li>
+                    <li><i class="fa-solid fa-check"></i> Unlisted off-menu creations</li>
+                    <li><i class="fa-solid fa-check"></i> Direct culinary commentary</li>
+                </ul>
+            </div>
+        </div>
+
+    </main>
+
+    <section class="concierge-cta-banner">
+        <h2>Plan an Unforgettable Evening</h2>
+        <p>Whether hosting a milestone corporate gala or a completely private celebration, let our concierge coordinate the architectural placement and dining profile mapping.</p>
+        <a href="contact.html" class="concierge-btn">Connect With Concierge</a>
+    </section>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const containerModules = document.querySelectorAll('.mini-carousel-container');
+
+            containerModules.forEach((box) => {
+                const trackSlides = box.querySelectorAll('.slide-item');
+                const paginationDots = box.querySelectorAll('.indicator-dot');
+                const loopSpeed = parseInt(box.getAttribute('data-speed')) || 3000;
+                
+                let activeTrackIndex = 0;
+                let lifecycleTimer = null;
+
+                function transitionToNextSlide() {
+                    trackSlides[activeTrackIndex].classList.remove('active');
+                    paginationDots[activeTrackIndex].classList.remove('active');
+
+                    activeTrackIndex = (activeTrackIndex + 1) % trackSlides.length;
+
+                    trackSlides[activeTrackIndex].classList.add('active');
+                    paginationDots[activeTrackIndex].classList.add('active');
+                }
+
+                function initiateCycleLoop() {
+                    if (!lifecycleTimer) {
+                        lifecycleTimer = setInterval(transitionToNextSlide, loopSpeed);
+                    }
+                }
+
+                function haltCycleLoop() {
+                    if (lifecycleTimer) {
+                        clearInterval(lifecycleTimer);
+                        lifecycleTimer = null;
+                    }
+                }
+
+                // Bind Event listeners for hover management
+                box.addEventListener('mouseenter', haltCycleLoop);
+                box.addEventListener('mouseleave', initiateCycleLoop);
+
+                // Initialize Click Actions on Dot Indicators
+                paginationDots.forEach((dot, clickIndex) => {
+                    dot.addEventListener('click', () => {
+                        haltCycleLoop();
+                        
+                        trackSlides[activeTrackIndex].classList.remove('active');
+                        paginationDots[activeTrackIndex].classList.remove('active');
+
+                        activeTrackIndex = clickIndex;
+
+                        trackSlides[activeTrackIndex].classList.add('active');
+                        paginationDots[activeTrackIndex].classList.add('active');
+                        
+                        initiateCycleLoop();
+                    });
+                });
+
+                // Fire up engine instance
+                initiateCycleLoop();
+            });
+        });
+    </script>
+</body>
+</html>

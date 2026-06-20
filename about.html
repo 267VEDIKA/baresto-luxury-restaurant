@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BARESTO | Our Story & Culinary Masters</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --gold: #d4af37;
+            --gold-dark: #b89024;
+            --dark-bg: #050608;
+            --card-bg: #10121a;
+            --text-gray: #8a90a0;
+            --border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background-color: var(--dark-bg); font-family: 'Poppins', sans-serif; color: #ffffff; overflow-x: hidden; }
+
+        /* ===== GLOBAL NAVIGATION BAR ===== */
+        .luxury-navbar {
+            position: fixed;
+            top: 0; left: 0; width: 100%;
+            padding: 20px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(5, 6, 8, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 100;
+        }
+        .logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 24px; font-weight: 700; letter-spacing: 3px;
+            color: var(--gold); text-transform: uppercase; text-decoration: none;
+        }
+        .nav-links { display: flex; gap: 35px; list-style: none; }
+        .nav-links a {
+            color: #ffffff; text-decoration: none; font-size: 13px;
+            letter-spacing: 1.5px; text-transform: uppercase; transition: color 0.3s;
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+
+        /* ===== HERO BANNER ===== */
+        .about-hero {
+            padding: 180px 20px 80px 20px;
+            text-align: center;
+            background: linear-gradient(to bottom, rgba(16, 18, 26, 0.5), var(--dark-bg));
+        }
+        .about-hero span { color: var(--gold); font-size: 12px; uppercase; letter-spacing: 4px; display: block; margin-bottom: 10px; }
+        .about-hero h1 { font-family: 'Cormorant Garamond', serif; font-size: 52px; font-weight: 500; letter-spacing: 1px; }
+
+        /* ===== STORY SPLIT COMPONENT ===== */
+        .story-container { max-width: 1200px; margin: 0 auto padding; padding: 0 20px 80px 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+        .story-content h2 { font-family: 'Cormorant Garamond', serif; font-size: 38px; color: var(--gold); margin-bottom: 20px; }
+        .story-content p { color: var(--text-gray); font-size: 14px; line-height: 1.8; margin-bottom: 20px; font-weight: 300; }
+        .story-img-frame { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid var(--border-color); }
+        .story-img-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+        /* ===== PROFESSIONAL CHEF SHOWCASE SECTION ===== */
+        .master-chef-section { background-color: #0b0d13; padding: 90px 20px; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); }
+        .chef-wrapper { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 450px 1fr; gap: 60px; align-items: top; }
+        
+        .chef-portrait-box { position: relative; border-radius: 12px; overflow: hidden; border: 1px solid rgba(214, 175, 55, 0.3); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
+        .chef-portrait-box img { width: 100%; height: 550px; object-fit: cover; display: block; }
+        .chef-signature-tag { position: absolute; bottom: 20px; left: 20px; right: 20px; background: rgba(5,6,8,0.85); backdrop-filter: blur(8px); padding: 15px; border-radius: 6px; border-left: 3px solid var(--gold); }
+        .chef-signature-tag h4 { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: #fff; }
+        .chef-signature-tag p { font-size: 11px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+
+        .chef-profile-details span { color: var(--gold); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; }
+        .chef-profile-details h2 { font-family: 'Cormorant Garamond', serif; font-size: 42px; margin: 5px 0 20px 0; }
+        .chef-profile-details .bio-text { color: var(--text-gray); font-size: 14px; line-height: 1.8; margin-bottom: 30px; font-weight: 300; }
+        
+        /* Signature Dish Card Sub-element */
+        .speciality-dish-card { background: var(--card-bg); border: 1px solid rgba(214,175,55,0.15); border-radius: 10px; padding: 20px; display: flex; gap: 20px; align-items: center; }
+        .dish-thumb { width: 110px; height: 110px; border-radius: 6px; overflow: hidden; flex-shrink: 0; }
+        .dish-thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .dish-info h4 { font-family: 'Cormorant Garamond', serif; font-size: 20px; color: var(--gold); margin-bottom: 4px; }
+        .dish-info p { color: var(--text-gray); font-size: 12px; line-height: 1.6; }
+
+        /* ===== METRIC / ACCLAIM LOGS ===== */
+        .metrics-row { max-width: 1200px; margin: 80px auto; padding: 0 20px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; text-align: center; }
+        .metric-item h3 { font-family: 'Cormorant Garamond', serif; font-size: 46px; color: var(--gold); font-weight: 600; }
+        .metric-item p { color: var(--text-gray); font-size: 12px; text-transform: uppercase; letter-spacing: 1px; margin-top: 5px; }
+
+        /* ===== PRESS LOGO TICKER ===== */
+        .press-ticker { padding: 40px 20px; background: #030405; border-top: 1px solid var(--border-color); text-align: center; }
+        .press-ticker p { font-size: 11px; text-transform: uppercase; color: rgba(255,255,255,0.2); letter-spacing: 3px; margin-bottom: 25px; }
+        .logo-flex { max-width: 1000px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; opacity: 0.4; filter: grayscale(100%); flex-wrap: wrap; gap: 20px; }
+        .logo-flex i { font-size: 24px; color: #fff; }
+        .logo-flex span { font-family: 'Cormorant Garamond', serif; font-weight: 700; font-size: 20px; letter-spacing: 1px; }
+
+        @media (max-width: 992px) {
+            .story-container, .chef-wrapper { grid-template-columns: 1fr; gap: 40px; }
+            .chef-portrait-box img { height: 400px; }
+            .metrics-row { grid-template-columns: 1fr 1fr; gap: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="luxury-navbar">
+        <a href="home.html" class="logo">BARESTO</a>
+        <ul class="nav-links">
+            <li><a href="home.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="booking.html">Booking</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="experiences.html">Experiences</a></li>
+        </ul>
+    </nav>
+
+    <header class="about-hero">
+        <span>Est. 2024</span>
+        <h1>The Art of Gastronomy</h1>
+    </header>
+
+    <section class="story-container">
+        <div class="story-content">
+            <h2>Our Heritage & Philosophy</h2>
+            <p>At BARESTO, we view culinary creation not merely as food preparation, but as an high-end sensory journey. Founded by a collective of passionate avant-garde culinary visionaries, our mission is to fuse old-world classical execution with bold modern methods.</p>
+            <p>Every dynamic texture, ingredient pairing, and premium layout element across our plates is calibrated precisely to deliver a dining experience that stays embedded in memory long after the feast is over.</p>
+        </div>
+        <div class="story-img-frame">
+            <img src="https://images.unsplash.com/photo-1544025162-d76694265947?q=80&w=600&auto=format&fit=crop" alt="Luxury Plating Setup">
+        </div>
+    </section>
+
+    <section class="master-chef-section">
+        <div class="chef-wrapper">
+            
+            <div class="chef-portrait-box">
+                <img src="https://images.unsplash.com/photo-1577219491135-ce391730fb2c?q=80&w=500&auto=format&fit=crop" alt="Executive Chef Portrait">
+                <div class="chef-signature-tag">
+                    <h4>Chef Marco Valerius</h4>
+                    <p>Executive Culinary Director</p>
+                </div>
+            </div>
+
+            <div class="chef-profile-details">
+                <span>The Mastermind</span>
+                <h2>Meet Chef Marco Valerius</h2>
+                <p class="bio-text">
+                    Boasting over two decades of experience operating inside Michelin-starred European kitchens, Chef Marco brings an ultra-refined architectural perspective to BARESTO. His culinary philosophy centers around pure ingredient respect, extracting high-intensity profile dynamics out of rare components while incorporating delicate molecular adjustments.
+                </p>
+
+                <div class="speciality-dish-card">
+                    <div class="dish-thumb">
+                        <img src="https://images.unsplash.com/photo-1551248429-40975aa4de74?q=80&w=600&auto=format&fit=crop" alt="Lobster Risotto Signature Dish">
+                    </div>
+                    <div class="dish-info">
+                        <h4>His Signature Dish</h4>
+                        <p><strong>Saffron Smoked Rock Lobster Risotto:</strong> Saffron-infused Carnaroli grain base slow-turned over clarified hazelnut oil emulsions, mounted cleanly beneath a butter-poached premium lobster tail crown.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="metrics-row">
+        <div class="metric-item">
+            <h3>3</h3>
+            <p>Global Michelin Stars Hosted</p>
+        </div>
+        <div class="metric-item">
+            <h3>100%</h3>
+            <p>Organic Boutique Farms Sourced</p>
+        </div>
+        <div class="metric-item">
+            <h3>24k</h3>
+            <p>Elite Patrons Served Annually</p>
+        </div>
+        <div class="metric-item">
+            <h3>45+</h3>
+            <p>Vintage Wine Vault Labels</p>
+        </div>
+    </section>
+
+    <footer class="press-ticker">
+        <p>Featured & Praised In</p>
+        <div class="logo-flex">
+            <span><i class="fa-solid fa-gem"></i> VOGUE LUXE</span>
+            <span><i class="fa-solid fa-utensils"></i> GOURMET DIARIES</span>
+            <span><i class="fa-solid fa-newspaper"></i> THE CHRONICLES</span>
+            <span><i class="fa-solid fa-wine-glass"></i> SOMMELIER MAG</span>
+        </div>
+    </footer>
+
+</body>
+</html>
