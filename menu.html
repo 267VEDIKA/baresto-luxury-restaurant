@@ -472,32 +472,7 @@
     </section>
 
     <script>
-        /* ===== TRACK ACTIVE LOGGED STATE ===== */
-        document.addEventListener("DOMContentLoaded", function() {
-            const profileZone = document.getElementById("user-profile-zone");
-            if (!profileZone) return;
-            const username = localStorage.getItem("baresto_user_name");
-            if (username) {
-                const initialLetter = username.charAt(0).toUpperCase();
-                profileZone.innerHTML = `
-                    <div class="user-profile-badge" onclick="toggleProfileDropdown(event)" style="display: flex; align-items: center; gap: 10px; cursor: pointer; position: relative;">
-                        <div class="profile-avatar-initial" style="width: 32px; height: 32px; background: linear-gradient(135deg, #d4af37, #b89024); border-radius: 50%; display: flex; justify-content: center; align-items: center; color: #050608; font-weight: 600; font-size: 14px;">${initialLetter}</div>
-                        <span class="profile-name" style="color: #ffffff; font-size: 13px; font-weight: 500;">${username}</span>
-                        <i class="fa-solid fa-chevron-down profile-arrow" style="font-size: 10px; color: #d4af37;"></i>
-                        <div class="profile-dropdown-menu" id="navDropdown">
-                            <a href="booking.html"><i class="fa-solid fa-utensils"></i> Book Table</a>
-                            <a href="#" onclick="executeAppLogout(event)"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a>
-                        </div>
-                    </div>`;
-            } else {
-                profileZone.innerHTML = `<a href="index.html" class="btn primary" style="padding: 6px 16px; font-size: 12px; text-decoration: none;">Sign In</a>`;
-            }
-        });
-
-        function toggleProfileDropdown(e) { e.stopPropagation(); const dropdown = document.getElementById("navDropdown"); if (dropdown) dropdown.classList.toggle("active"); }
-        function executeAppLogout(e) { e.preventDefault(); localStorage.removeItem("baresto_user_name"); window.location.href = "index.html"; }
-        window.onclick = function() { const dropdown = document.getElementById("navDropdown"); if (dropdown) dropdown.classList.remove("active"); }
-
+       
         /* ===== MODAL POPUP DISPLAY LOGIC ===== */
         function openOccasionModal() {
             document.getElementById('occasionModal').classList.add('open');
